@@ -1,7 +1,7 @@
 Summary: The lrz and lsz modem communications programs
 Name: lrzsz
 Version: 0.12.20
-Release: 43%{?dist}
+Release: 46%{?dist}
 License: GPLv2+
 Group: Applications/Communications
 Source: http://www.ohse.de/uwe/releases/%{name}-%{version}.tar.gz
@@ -9,6 +9,10 @@ Patch1: lrzsz-0.12.20-glibc21.patch
 Patch2: lrzsz-0.12.20.patch
 Patch3: lrzsz-0.12.20-man.patch
 Patch4: lrzsz-0.12.20-aarch64.patch
+Patch5: lrzsz-0.12.20-CVE-2026-105841.patch
+Patch6: lrzsz-0.12.20-CVE-2026-105841-docs.patch
+Patch7: lrzsz-0.12.20-CVE-2026-105840.patch
+Patch8: lrzsz-0.12.20-s-argument.patch
 Url: http://www.ohse.de/uwe/software/lrzsz.html
 BuildRequires: gettext
 
@@ -25,6 +29,10 @@ copylefted Zmodem solution for Linux systems.
 %patch2 -p1 -b .crc
 %patch3 -p1 -b .man
 %patch4 -p1 -b .aarch64
+%patch5 -p1 -b .CVE-2026-105841
+%patch6 -p1 -b .CVE-2026-105841-docs
+%patch7 -p1 -b .CVE-2026-105840
+%patch8 -p1 -b .s-argument
 
 rm -f po/*.gmo
 
@@ -44,6 +52,16 @@ make %{?_smp_mflags}
 %{_mandir}/*/*
 
 %changelog
+* Tue Oct 13 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-46
+- Fix long-standing SIGSEGV bug when using the -s parameter without
+  an argument (RHEL-282148)
+
+* Tue Oct 13 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-45
+- Backport tightened path handling from 0.13.1 (CVE-2026-105840)
+
+* Tue Oct 13 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-44
+- Remove 'Topipe' feature. (CVE-2026-105841)
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.12.20-43
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
