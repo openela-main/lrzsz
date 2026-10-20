@@ -1,0 +1,26 @@
+From 4bdae46566e960473fa9de2dc24c67177b10fd89 Mon Sep 17 00:00:00 2001
+From: Frank Liang <xiliang@redhat.com>
+Date: Sun, 27 Apr 2025 23:44:43 +0800
+Subject: [PATCH] lsz: "-s" requires argument
+
+Signed-off-by: Frank Liang <xiliang@redhat.com>
+---
+ src/lsz.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/lsz.c b/src/lsz.c
+index e9e4660..b8e4c60 100644
+--- a/src/lsz.c
++++ b/src/lsz.c
+@@ -349,7 +349,7 @@ main(int argc, char **argv)
+ 	Rxtimeout = 600;
+ 
+ 	while ((c = getopt_long (argc, argv, 
+-		"2+48abB:C:c:dfeEghHi:kL:l:m:M:NnOopRrqsSt:TUuvw:XYy",
++		"2+48abB:C:c:dfeEghHi:kL:l:m:M:NnOopRrqs:St:TUuvw:XYy",
+ 		long_options, (int *) 0))!=EOF)
+ 	{
+ 		unsigned long int tmp;
+-- 
+2.49.0
+

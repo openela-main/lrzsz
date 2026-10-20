@@ -1,7 +1,7 @@
 Summary: The lrz and lsz modem communications programs
 Name: lrzsz
 Version: 0.12.20
-Release: 66%{?dist}
+Release: 69%{?dist}
 License: GPL-2.0-or-later AND GPL-2.0-only
 Source: http://www.ohse.de/uwe/releases/%{name}-%{version}.tar.gz
 Patch1: lrzsz-0.12.20-glibc21.patch
@@ -11,6 +11,10 @@ Patch4: lrzsz-0.12.20-aarch64.patch
 Patch5: lrzsz-configure-c99.patch
 Patch6: lrzsz-c99.patch
 Patch7: lrzsz-socklen.patch
+Patch8: lrzsz-0.12.20-CVE-2026-105841.patch
+Patch9: lrzsz-0.12.20-CVE-2026-105841-docs.patch
+Patch10:lrzsz-0.12.20-CVE-2026-105840.patch
+Patch11:lrzsz-0.12.20-s-argument.patch
 Url: http://www.ohse.de/uwe/software/lrzsz.html
 BuildRequires: gcc gettext
 BuildRequires: make
@@ -22,15 +26,7 @@ the rzsz package. Lrzsz was created to provide a working GNU
 copylefted Zmodem solution for Linux systems.
 
 %prep
-%setup -q
-
-%patch1 -p1 -b .glibc21
-%patch2 -p1 -b .crc
-%patch3 -p1 -b .man
-%patch4 -p1 -b .aarch64
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%autosetup -p1
 
 rm -f po/*.gmo
 
@@ -55,6 +51,16 @@ for m in sb sx; do ln -s sz.1 %{buildroot}%{_mandir}/man1/$m.1; done
 %{_mandir}/*/*
 
 %changelog
+* Tue Oct 13 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-69
+- Fix long-standing SIGSEGV bug when using the -s parameter without
+  an argument (RHEL-282106)
+
+* Fri Oct 09 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-68
+- Backport tightened path handling from 0.13.1 (CVE-2026-105840)
+
+* Fri Oct 09 2026 Fedor Vorobev <fvorobev@redhat.com> - 0.12.20-67
+- Remove 'Topipe' feature. (CVE-2026-105841)
+
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 0.12.20-66
 - Bump release for October 2024 mass rebuild:
   Resolves: RHEL-64018
